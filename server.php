@@ -1,4 +1,10 @@
 <?php
+	// connect to database
+	// The update the database name.
+
+	#SEQUENCE = mysqli_connect(server, user, password, database)
+	$db = mysqli_connect('localhost', 'root', '', 'test');
+
 	session_start();
 	error_reporting(0);
 	?>
@@ -44,8 +50,6 @@
 	$errors = array();
 	$_SESSION['success'] = "";
 
-	// connect to database
-	$db = mysqli_connect('localhost', 'root', '', 'test');
 
 	if(isset($_GET['action'])) {
 		// REGISTER USER
