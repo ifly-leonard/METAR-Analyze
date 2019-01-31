@@ -511,7 +511,7 @@
       en-us	: English (United States)
      -->
   <!--Now the Audio part, paste your API Key HERE!-->
-  <audio src="http://api.voicerss.org/?key=3cb117cb67c34a69986f4ffd768b21a8&hl=en-gb&src='<?php echo $broadcast?>'" id="audio"></audio>
+  <audio src="'<?php echo $broadcast?>'" id="audio"></audio>
   <button class="btn btn-info btn-md" id="play" onclick="play()">  Play Voice ATIS </button>
 
   <div class="col-md-6 col-lg-6">
