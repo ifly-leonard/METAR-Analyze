@@ -68,12 +68,13 @@
 			if (empty($email)) { array_push($errors, "Email is required"); }
 			if (empty($password)) { array_push($errors, "Password is required"); }
 
-			$check = "SELECT * FROM users WHERE username = $username OR email = $email";
+			$check = "SELECT * FROM users WHERE username = '$username' OR email = '$email'";
 			$check_results = mysqli_query($db, $check);
 			$check_results = mysqli_num_rows($check_results);
 
 			if(count($check_results) > 0) {
 				array_push($errors, "Username (or) Email ID is already in use! Try loggin in!");
+				$page = 'register.php';
 			}
 			// register user if there are no errors in the form
 			if (count($errors) == 0) {
@@ -105,15 +106,19 @@
 
 			if (count($errors) == 0) {
 				$password = md5($password);
-				$query = "SELECT * FROM users WHERE username='$username' AND password='$password'";
+				$query = "SELECT * FROM users WHERE email = '$username' AND password='$password'";
 				$results = mysqli_query($db, $query);
 
+				$acc_details = "SELECT * FROM users WHERE email = '$username'";
+				$acc = mysqli_query($db, $acc_details);
+				$acc = mysqli_fetch_assoc($acc);
 				if (mysqli_num_rows($results) == 1) {
-					$_SESSION['username'] = $username;
+					$_SESSION['username'] = $acc['username'];
 					$_SESSION['success'] = "You are now logged in";
 					header('location: index.php');
 				}else {
-					array_push($errors, "Incorrect Username (or) password, please try again.");
+					array_push($errors, "Incorrect E-mail ID (or) password, please try again.");
+					$page = 'login.php';
 				}
 			}
 		}

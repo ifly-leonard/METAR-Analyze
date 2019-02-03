@@ -22,7 +22,7 @@
 				<?php include ('errors.php'); ?>
 				<div class="row">
 						<div class="col-md-3 field-label-responsive">
-								<label for="name">Username</label>
+								<label for="name">E-Mail ID</label>
 						</div>
 						<div class="col-md-6">
 								<div class="form-group">
@@ -55,6 +55,7 @@
 								<a href="register.php" class="btn btn-warning">Register</a>
 						</div>
 				</div>
+
 
 		<div class="container">
 			<footer class="pt-4 my-md-5 pt-md-5 border-top">

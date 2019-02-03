@@ -136,7 +136,7 @@
   <?php
      $vfr = "VFR";
      $mvfr = "MVFR";
-     $ifr = "IFR";  error_reporting(0);
+     $ifr = "IFR";  
 
      // if ($flightrules == $vfr)
      // {
@@ -516,7 +516,7 @@
 
   <div class="row">
 		<div class="col-md-6 col-lg-6">
-	  <div class="block">
+	  	<div class="block">
 	    <!-- Metar ICAO Results  Title -->
 	    <p class="lead">
 	      <p><?php if (!$metar) { echo '<h2><small>METAR currently not available</small></h2>'; } else { echo '<strong>RawData</strong> : '.$metar; } ?></p>
@@ -572,7 +572,7 @@
 	          borderColor: "rgba(179,181,198,1)",
 	          pointBorderColor: "#fff",
 	          pointBackgroundColor: "rgba(179,181,198,1)",
-	          data: [20,20,20,20,20]
+	          data: [15,29.92,10,0,3]
 	        }, {
 	          label: "<?php echo $icao; ?>",
 	          fill: true,
@@ -588,7 +588,7 @@
 	    options: {
 	      title: {
 	        display: true,
-	        text: 'METAR data into Radar Chart'
+	        text: 'METAR data into interactive Radar Chart, click on <?php echo $icao; ?> to display only Global Average'
 	      }
 	    }
 	});
