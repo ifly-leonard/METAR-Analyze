@@ -514,40 +514,85 @@
   <audio src="http://api.voicerss.org/?key=3cb117cb67c34a69986f4ffd768b21a8&hl=en-gb&src='<?php echo $broadcast?>'" id="audio"></audio>
   <button class="btn btn-info btn-md" id="play" onclick="play()">  Play Voice ATIS </button>
 
-  <div class="col-md-6 col-lg-6">
-  <div class="block">
-    <!-- Metar ICAO Results  Title -->
-    <p class="lead">
-      <p><?php if (!$metar) { echo '<h2><small>METAR currently not available</small></h2>'; } else { echo $metar; } ?></p>
-    </p>
-    <div class="block-title">
-        <h1 class="display-4"><i class="gi gi-resize_full"></i> <Strong>Decoded</Strong> WX  </h1>
-    </div>
-    <!-- END Metar ICAO Results Title -->
-    <!-- Metar ICAO Results Content -->
-    <ul class="list-group">
-      <li class="list-group-item"><span class="label label-primary">Station ID :</span> <?php echo $stationid;?> (<?php echo $stationname;?>/<?php echo $stationcountry ;?>)</li>
-      <li class="list-group-item"><span class="label label-default">Observation made at</span> <?php echo $time;?></li>
-      <li class="list-group-item"><span class="label label-default">Wind Direction:</span> <?php echo $winddir;?> &deg; At Speed: <?php echo $windspd;?> kts</li>
-      <li class="list-group-item"><span class="label label-default">Sky Condition :</span>
-            <?php
-      if(!$skycondition3 OR !$skycondition4)
-      {
-        echo $skycondition0.' Clouds At '.$skycondition1.' Feet';
-      }
-      else
-      {
-        echo $skycondition0.' Clouds At '.$skycondition1.' Feet / '.$skycondition3.' Clouds At '.$skycondition4.' Feet';
-      }
-    ?></li>
-      <li class="list-group-item"><span class="label label-default">Visibility:</span> <?php echo $visibility.$sky1;?> Miles</li>
-      <li class="list-group-item"><span class="label label-default">Temperature:</span> <?php echo $temperature.$sky1;?>&deg; C / Dew Point <?php echo $dewpoint;?>&deg; C</li>
-      <li class="list-group-item"><span class="label label-default">Altimeter:</span> <?php echo $altimeter;?> inHg</li>
+  <div class="row">
+		<div class="col-md-6 col-lg-6">
+	  <div class="block">
+	    <!-- Metar ICAO Results  Title -->
+	    <p class="lead">
+	      <p><?php if (!$metar) { echo '<h2><small>METAR currently not available</small></h2>'; } else { echo '<strong>RawData</strong> : '.$metar; } ?></p>
+	    </p>
+	    <div class="block-title">
+	        <h1 class="display-4"><i class="gi gi-resize_full"></i> <Strong>Decoded</Strong> WX  </h1>
+	    </div>
+	    <!-- END Metar ICAO Results Title -->
+	    <!-- Metar ICAO Results Content -->
+	    <ul class="list-group">
+	      <li class="list-group-item"><span class="label label-primary">Station ID :</span> <?php echo $stationid;?> (<?php echo $stationname;?>/<?php echo $stationcountry ;?>)</li>
+	      <li class="list-group-item"><span class="label label-default">Observation made at</span> <?php echo $time;?></li>
+	      <li class="list-group-item"><span class="label label-default">Wind Direction:</span> <?php echo $winddir;?> &deg; At Speed: <?php echo $windspd;?> kts</li>
+	      <li class="list-group-item"><span class="label label-default">Sky Condition :</span>
+	            <?php
+	      if(!$skycondition3 OR !$skycondition4)
+	      {
+	        echo $skycondition0.' Clouds At '.$skycondition1.' Feet';
+	      }
+	      else
+	      {
+	        echo $skycondition0.' Clouds At '.$skycondition1.' Feet / '.$skycondition3.' Clouds At '.$skycondition4.' Feet';
+	      }
+	    ?></li>
+	      <li class="list-group-item"><span class="label label-default">Visibility:</span> <?php echo $visibility.$sky1;?> Miles</li>
+	      <li class="list-group-item"><span class="label label-default">Temperature:</span> <?php echo $temperature.$sky1;?>&deg; C / Dew Point <?php echo $dewpoint;?>&deg; C</li>
+	      <li class="list-group-item"><span class="label label-default">Altimeter:</span> <?php echo $altimeter;?> inHg</li>
 
-    </ul>
-    <!-- END Metar ICAO Results Content -->
-  </div>
-  </div>
+	    </ul>
+	    <!-- END Metar ICAO Results Content -->
+	  </div>
+	  </div>
+
+		<div class="col-md-6 col-lg-6">
+			<canvas id="chart" width="150" height="auto;"></canvas>
+		</div>
+	</div>
+
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.js"></script>
+
+	<script>
+	new Chart(document.getElementById("chart"), {
+	    type: 'radar',
+	    data: {
+	      labels: ["Temperature", "Pressure", "Dewpoint", "Wind Direction", "Wind Speed"],
+	      datasets: [
+	        {
+	          label: "Global Average",
+	          fill: true,
+	          backgroundColor: "rgba(179,181,198,0.2)",
+	          borderColor: "rgba(179,181,198,1)",
+	          pointBorderColor: "#fff",
+	          pointBackgroundColor: "rgba(179,181,198,1)",
+	          data: [20,20,20,20,20]
+	        }, {
+	          label: "<?php echo $icao; ?>",
+	          fill: true,
+	          backgroundColor: "rgba(255,99,132,0.2)",
+	          borderColor: "rgba(255,99,132,1)",
+	          pointBorderColor: "#fff",
+	          pointBackgroundColor: "rgba(255,99,132,1)",
+	          pointBorderColor: "#fff",
+	          data: [<?php echo $temperature; ?> ,<?php echo $altimeter; ?>,<?php echo $dewpoint; ?>, <?php echo $atiswinddir1.''. $atiswinddir2.''. $atiswinddir3 ?>, <?php echo $atiswindspd1.''.$atiswindspd2.''.$atiswindspd3; ?>]
+	        }
+	      ]
+	    },
+	    options: {
+	      title: {
+	        display: true,
+	        text: 'METAR data into Radar Chart'
+	      }
+	    }
+	});
+	</script>
 
 
   <script>
